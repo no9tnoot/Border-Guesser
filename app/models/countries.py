@@ -5,20 +5,17 @@ from typing import List, Optional, Dict, Any
 class Country(BaseModel):
     name: str
     code: str
-    borders: List[str]  # List of country codes that border this country
-    
-    @field_validator("name", mode="before")
-    def extract_common_name(cls, value):
-        if isinstance(value, dict):
-            return value.get("common")
-        return value
+    borders: List[str]
 
-    @field_validator("code", mode="before")
-    def extract_code(cls, value, values):
-        # The API JSON uses "cca3" instead of "code"
-        if "cca3" in values:
-            return values["cca3"]
-        return value
+    @classmethod
+    def model_validate(cls, value: dict) -> "Country":
+        # Preprocess dict to ensure required fields exist
+        value = value.copy()
+        if "code" not in value and "cca3" in value:
+            value["code"] = value["cca3"]
+        if isinstance(value.get("name"), dict):
+            value["name"] = value["name"].get("common")
+        return super().model_validate(value)
 
 class GameField(BaseModel):
     id: int

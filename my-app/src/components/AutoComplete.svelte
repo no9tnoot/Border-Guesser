@@ -1,4 +1,4 @@
-<!-- src/lib/AutocompleteInput.svelte -->
+<!-- src/lib/Autocomplete.svelte -->
 <script>
   import { createEventDispatcher, onMount } from 'svelte';
   

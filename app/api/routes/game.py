@@ -10,7 +10,7 @@ from app.services.game_service import GameService
 router = APIRouter()
 game_service = GameService()
 
-@router.post("/game/start")
+@router.get("/game/start")
 async def start_game() -> GameStateResponse:
     """Start a new game with blank fields"""
     try:

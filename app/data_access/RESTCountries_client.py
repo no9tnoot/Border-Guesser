@@ -1,11 +1,11 @@
 
-from fastapi import requests
+import requests
 from app.data_access import data_interface
 from app.models import countries
 import json 
 
 
-class RESTCountriesClient(data_interface.DataAccessInterface):
+class RESTCountriesClient(data_interface.DataInterface):
     def __init__(self, base_url: str = "https://restcountries.com/v3.1"):
         self.base_url = base_url
 

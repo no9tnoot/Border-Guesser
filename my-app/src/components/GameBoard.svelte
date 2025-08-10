@@ -1,7 +1,7 @@
 <!-- src/lib/GameBoard.svelte -->
 <script>
-  import { gameState, isLoading, message, showHint, gameApi } from './stores/gameStore.js';
-  import AutocompleteInput from './AutocompleteInput.svelte';
+  import { gameState, isLoading, message, showHint, gameApi } from '../stores/gameStore.js';
+  import AutocompleteInput from './AutoComplete.svelte';
   import ScoreBoard from './ScoreBoard.svelte';
   import { onMount } from 'svelte';
 
