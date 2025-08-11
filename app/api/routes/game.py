@@ -17,7 +17,8 @@ async def start_game() -> GameStateResponse:
         current_game_state = game_service.start_new_game()
         return GameStateResponse(   
         success = True,
-        game_state = current_game_state
+        game_state = current_game_state,
+        message = "Game started successfully"
     )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -30,7 +31,8 @@ async def get_current_game() -> GameStateResponse:
         raise HTTPException(status_code=404, detail="No active game")
     return GameStateResponse(   
         success = True,
-        game_state = current_game_state
+        game_state = current_game_state,
+        message = "Current game state retrieved successfully"
     )
 
 @router.post("/game/update-field", response_model=GameStateResponse)
@@ -40,16 +42,16 @@ async def update_field(request: UpdateFieldRequest):
         game_state = game_service.update_field(request.field_id, request.country_name)
         
         # Generate appropriate message
-        field = next((f for f in game_state["fields"] if f["id"] == request.field_id), None)
+        field = next((f for f in game_state.fields if f.id == request.field_id), None)
         if field:
-            if field["is_correct"]:
-                remaining = game_state["total_fields"] - game_state["completed_fields"]
+            if field.is_correct:
+                remaining = game_state.total_fields - game_state.completed_fields
                 if remaining == 0:
                     message = "🎉 Congratulations! You completed all countries!"
                 else:
                     message = f"✅ Correct! {remaining} more to go."
-            elif field["is_filled"]:
-                message = f"❌ '{request.country_name}' doesn't border {game_state['target_country']}."
+            elif field.is_filled:
+                message = f"❌ '{request.country_name}' doesn't border {game_state.target_country}."
             else:
                 message = "Field cleared."
         else:

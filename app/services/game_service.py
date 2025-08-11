@@ -77,7 +77,7 @@ class GameService:
             completed_fields = 0,
             game_complete = False
         )
-        
+
         self.current_game = game_data
         
         # Return sanitized version (without correct answers)
@@ -87,10 +87,11 @@ class GameService:
                 id = field.id,
                 value = field.value,
                 is_correct = field.is_correct,
-                is_filled = field.is_filled
+                is_filled = field.is_filled,
+                correct_answer= ""
             ))
         
-        client_game_data = self.current_game
+        client_game_data = self.current_game.model_copy()
         client_game_data.fields = client_fields
         return client_game_data
     
@@ -147,11 +148,12 @@ class GameService:
                 id = field.id,
                 value = field.value,
                 is_correct = field.is_correct,
-                is_filled = field.is_filled
+                is_filled = field.is_filled,
+                correct_answer = ""  
             ))
         
         
-        client_game_data = self.current_game
+        client_game_data = self.current_game.model_copy()
         client_game_data.fields = client_fields
         return client_game_data
     

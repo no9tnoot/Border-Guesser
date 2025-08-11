@@ -30,7 +30,7 @@ export const gameApi = {
     
     try {
       const response = await fetch(`${API_BASE}/game/start`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },

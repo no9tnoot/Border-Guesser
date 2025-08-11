@@ -12,11 +12,6 @@
     gameApi.startNewGame();
   });
 
-  function handleFieldInput(event) {
-    const { fieldId, value } = event.detail;
-    gameApi.updateField(fieldId, value, false); // Debounced update
-  }
-
   function handleFieldSubmit(event) {
     const { fieldId, value } = event.detail;
     gameApi.updateField(fieldId, value, true); // Immediate update
@@ -94,7 +89,6 @@
                 isFilled={field.is_filled}
                 disabled={$isLoading}
                 placeholder="Country name..."
-                on:input={handleFieldInput}
                 on:submit={handleFieldSubmit}
               />
             </div>
